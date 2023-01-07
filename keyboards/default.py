@@ -29,4 +29,4 @@ ukrposhta = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🗓 Графік роботи', '📦 Відділення').row('👈️ Назад')
 
 security_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🏨 Пункти незламності').row('👈️ Назад')
+    .row('🔥 Гаряча лінія').row('🏨 Пункти незламності').row('👈️ Назад')

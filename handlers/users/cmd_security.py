@@ -11,6 +11,7 @@ from settings import functions
 class FSM_security(StatesGroup):
     security = State()
     nezlamnist = State()
+    fireline = State()
 
 
 @dp.message_handler(text="🛡 Безпека", chat_type=types.ChatType.PRIVATE, state="*")
@@ -26,7 +27,7 @@ async def cmd_poshta(message: types.Message):
 async def back_state(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
     state_ = current_state.split(':')[1]
-    if state_ in ['nezlamnist']:
+    if state_ in ['nezlamnist', 'fireline']:
         await FSM_security.security.set()
         await message.answer("Оберіть пункт меню", reply_markup=kb.security_menu)
     elif state_ == 'security':
@@ -77,3 +78,11 @@ async def points_nezlamnist(message: types.Message, state: FSMContext):
         , disable_notification=True, reply_markup=kb.back_btn)
     await FSM_security.nezlamnist.set()
 
+
+@dp.message_handler(Text(equals="🔥 Гаряча лінія"), state=FSM_security.security)
+async def points_nezlamnist(message: types.Message, state: FSMContext):
+    await message.answer(
+        f"Гаряча лінія для всіх жителів Олександрівської селищної територіальної громади.\n\nПо всім питанням просимо "
+        f"телефонувати за номерам, який працює цілодобово:\n\n📱 +38(098)-717-72-34.",
+        disable_notification=True, reply_markup=kb.back_btn)
+    await FSM_security.fireline.set()
