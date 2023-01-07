@@ -1,0 +1,12 @@
+ {
+  "apps": [
+    {
+      "name": "olex_bot",
+      "cwd": "/home/mserega/bots/olex_bot",
+      "args": "",
+      "script": "olex_bot.py",
+      "exec_mode": "fork",
+      "exec_interpreter": "/home/mserega/bots/olex_bot/env/bin/python3.9"
+    }
+  ]
+}
