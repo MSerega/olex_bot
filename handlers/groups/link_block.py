@@ -19,5 +19,6 @@ async def block_links(message: types.Message):
                  f"Посилання в групі може писати лише адміністрація групи.",
             parse_mode=types.ParseMode.HTML
         )
+
         await message.delete()
         await delete_message(linkmessage, 10)
