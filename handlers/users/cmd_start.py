@@ -14,17 +14,8 @@ async def command_start(message: types.Message):
 
     arguments = message.get_args()
     if not arguments:
-        await message.answer(
-            f"Вітаю, на даний момент можу вам запропонувати:"
-            f"\n- карту повітряних тривог;"
-            f"\n- прогноз погоди в Олександрівці;"
-            f"\n- курс валют;"
-            f"\n- каталог послуг таксі;"
-            f"\n- розклад руху автобусів."
-            f"\n- нова пошта (відділення).",
-            disable_notification=True)
-        await asyncio.sleep(1)
-        await message.answer("Оберіть функцію ", reply_markup=kb.main_menu, disable_notification=True)
+        await message.answer("Вітаю, на даний момент можу вам запропонувати обрати наступні функції:",
+                             reply_markup=kb.main_menu, disable_notification=True)
     elif arguments == 'news':
         await command_news(message)
     elif arguments == 'advertising':
