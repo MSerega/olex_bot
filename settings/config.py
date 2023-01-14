@@ -27,6 +27,7 @@ PRIVAT_ECHANGE = env.str("PRIVAT_ECHANGE")
 SINOPTIK = env.str("SINOPTIK")
 GISMETIO = env.str("GISMETIO")
 FUEL_ANP_SHELL = env.str("FUEL_ANP_SHELL")
+TRAINS = env.str("TRAINS")
 
 
 
