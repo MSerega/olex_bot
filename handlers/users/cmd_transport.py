@@ -97,6 +97,7 @@ async def suburban_trains(message: types.Message, state: FSMContext):
                  f"📅 Період: {train['days']}\n" \
                  f"📋 Маршрут: {train['way']}\n" \
                  f"🕰 Час прибуття: {train['time_start']}\n" \
+                 f"⏱ Зупинка: {train['time_stop']}\n" \
                  f"🕰 Час відправлення: {train['time_end']}\n\n"
     await message.answer(f"Розклад руху приміських поїздів через станцію Фундукліївка:\n\n" + trains,
                          reply_markup=kb.back_btn)
