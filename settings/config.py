@@ -24,10 +24,14 @@ g_pidsluhano_id = -1001247030550
 
 # Pages for parsing
 PRIVAT_ECHANGE = env.str("PRIVAT_ECHANGE")
+
 SINOPTIK = env.str("SINOPTIK")
 GISMETIO = env.str("GISMETIO")
+
 FUEL_ANP_SHELL = env.str("FUEL_ANP_SHELL")
+
 SUBURNAN_TRAINS = env.str("SUBURNAN_TRAINS")
+PASSENGER_TRAINS = env.str("PASSENGER_TRAINS")
 
 
 

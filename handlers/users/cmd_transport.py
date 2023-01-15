@@ -5,7 +5,7 @@ from aiogram.dispatcher.filters import Text
 
 from loader import dp
 from keyboards import default as kb
-from scripts.train import get_trains
+from scripts.train import get_passenger_trains, get_suburnan_trains
 from settings import functions
 
 
@@ -90,16 +90,32 @@ async def poshta_ukr(message: types.Message, state: FSMContext):
 
 @dp.message_handler(Text(equals="🚞 Приміські поїзди"), state=FSM_transport.trains)
 async def suburban_trains(message: types.Message, state: FSMContext):
-    trains_list = get_trains()
-    trains = ''
+    trains_list = get_suburnan_trains()
+    trains_s = ''
     for train in trains_list:
-        trains += f"🚊 Поїзд №: {train['number']}\n" \
+        trains_s += f"🚊 Поїзд №: {train['number']}\n" \
                  f"📅 Період: {train['days']}\n" \
                  f"📋 Маршрут: {train['way']}\n" \
                  f"🕰 Час прибуття: {train['time_start']}\n" \
                  f"⏱ Зупинка: {train['time_stop']}\n" \
                  f"🕰 Час відправлення: {train['time_end']}\n\n"
-    await message.answer(f"Розклад руху приміських поїздів через станцію Фундукліївка:\n\n" + trains,
+    await message.answer(f"Розклад руху приміських поїздів через станцію Фундукліївка:\n\n" + trains_s,
                          reply_markup=kb.back_btn)
     await FSM_transport.suburban_trains.set()
+
+
+@dp.message_handler(Text(equals="🚞 Пасажирські поїзди"), state=FSM_transport.trains)
+async def suburban_trains(message: types.Message, state: FSMContext):
+    trains_list = get_passenger_trains()
+    trains_p = ''
+    for train in trains_list:
+        trains_p += f"🚊 Поїзд №: {train['number']}\n" \
+                 f"📅 Період: {train['days']}\n" \
+                 f"📋 Маршрут: {train['way']}\n" \
+                 f"🕰 Час прибуття: {train['time_start']}\n" \
+                 f"⏱ Зупинка: {train['time_stop']}\n" \
+                 f"🕰 Час відправлення: {train['time_end']}\n\n"
+    await message.answer(f"Розклад руху пасажирських поїздів через станцію Фундукліївка:\n\n" + trains_p,
+                         reply_markup=kb.back_btn)
+    await FSM_transport.passenger_trains.set()
 
