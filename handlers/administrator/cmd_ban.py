@@ -24,7 +24,7 @@ async def cmd_ban(message: types.Message):
         return False
 
     await message.answer(
-        "Учасник: {user}\nбув заблокований в чаті адміністратором.\nТермін: {duration}\n{comment}".format(
+        "Учасник: {user}\nбув заблокований в чаті адміністратором.\nТермін: {duration}.\n{comment}".format(
             user=message.reply_to_message.from_user.get_mention(),
             admin=message.from_user.get_mention(),
             duration=format_timedelta(

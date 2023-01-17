@@ -52,9 +52,11 @@ async def text_of_advertising(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['ads_text'] = message.text
     await state.finish()
-    await message.answer("Як тільки модератор перевірить оплату, ваше оголошення буде опубліковано в групі та каналі", disable_notification=True)
+    await message.answer("Як тільки модератор перевірить оплату, ваше оголошення буде опубліковано в групі та каналі",
+                         disable_notification=True, reply_markup=types.ReplyKeyboardRemove())
 
     kb_contact = types.InlineKeyboardMarkup().row(
         types.InlineKeyboardButton("✉ Зв'язатись з автором", url=f"tg://user?id={data['user_id']}"))
 
-    await dp.bot.send_photo(ADMIN, data['photo_id'], caption=f"{data['ads_text']}", reply_markup=kb_contact)
+    await dp.bot.send_photo(ADMIN, data['photo_id'], caption=f"Користувач: {data['user_id']}\n{data['ads_text']}",
+                            reply_markup=kb_contact)
