@@ -59,13 +59,7 @@ async def poshta_ukr(message: types.Message, state: FSMContext):
         f"⏱ 12:00, ⏱ 13:25, ⏱ 16:30\n\n"
         f"Кропивницький - Олександрівка:\n"
         f"⏱ 07:30, ⏱ 08:50, ⏱ 10:00, ⏱ 12:20,\n"
-        f"⏱ 12:30, ⏱ 14:20, ⏱ 15:20, ⏱ 16:00\n\n"
-
-        f"з 20 грудня 2022 року по 20 січня 2023 року\n\n"
-        f"Олександрівка - Кропивницький:\n"
-        f"⏱ 7.45\n\n" 
-        f"Кропивницький - Олександрівка:\n"
-        f"⏱ 17.30", reply_markup=kb.back_btn)
+        f"⏱ 12:30, ⏱ 14:20, ⏱ 15:20, ⏱ 16:00\n\n", reply_markup=kb.back_btn)
     await FSM_transport.bus.set()
 
 
