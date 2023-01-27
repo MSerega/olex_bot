@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from db.db_connect import update_db_horoscope,insert_db_horoscope
+from db.db_connect import update_db_horoscope
 from settings.config import HOROSCOPE
 
 
