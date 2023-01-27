@@ -1,6 +1,5 @@
 from aiogram import executor, types
 
-from db.db_connect import insert_db_horoscope
 from loader import dp
 
 from db import db_connect
@@ -8,7 +7,6 @@ import asyncio
 
 
 import middlewares, filters, handlers
-from scripts.horoscope import update_horoscope
 from settings import bot_commands, on_clock
 
 from datetime import datetime

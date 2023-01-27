@@ -36,7 +36,7 @@ security_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True
 trains_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚞 Приміські поїзди').row('🚞 Пасажирські поїзди').row('👈️ Назад')
 
-zodiacs = ReplyKeyboardMarkup(one_time_keyboard=True) \
+zodiacs = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('♈ Овен', '♉ Тілець', '♊ Близнюки') \
     .row('♋ Рак', '♌ Лев', '♍ Діва') \
     .row('♎ Терези', '♏ Скорпіон', '♐ Стрілець') \
