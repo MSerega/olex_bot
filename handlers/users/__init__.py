@@ -7,4 +7,5 @@ from . import cmd_news
 from . import cmd_security
 from . import cmd_advertising
 from . import cmd_poshta
+from . import cmd_horoscope
 from . import other

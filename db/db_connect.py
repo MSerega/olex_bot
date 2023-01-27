@@ -30,6 +30,12 @@ async def database():
             "ban_time"	INTEGER DEFAULT 0,
             PRIMARY KEY("id" AUTOINCREMENT)
         );""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS "horoscopes" (
+            "id" INTEGER NOT NULL UNIQUE,
+            "zodiac" TEXT DEFAULT NULL,
+            "prevision" TEXT DEFAULT NULL,
+            PRIMARY KEY("id" AUTOINCREMENT)
+        );""")
         conn.commit()
         print("Успішне підключення до бази данних")
     except Exception as e:
@@ -65,8 +71,8 @@ def get_fuel():
 
 def user_exists(user_id) -> bool:
     sql = "SELECT user_id FROM users WHERE user_id = ?", (user_id,)
-    r = cursor.execute(*sql).fetchone()
-    return r is not None
+    row = cursor.execute(*sql).fetchone()
+    return row is not None
 
 
 def add_users(tg_user):
@@ -87,3 +93,27 @@ def get_users():
         return users
     except Exception as e:
         print(f"Виникла помилка:\nERROR:{e}")
+
+
+def update_db_horoscope(zodiac_, prevision_):
+    try:
+        sql = "UPDATE horoscopes SET prevision = ? WHERE zodiac = ?", (prevision_, zodiac_)
+        cursor.execute(*sql)
+        conn.commit()
+    except Exception as e:
+        print(f"Виникла помилка:\nERROR:{e}")
+
+
+# def insert_db_horoscope(zodiac_, prevision_):
+#     try:
+#         sql = "INSERT INTO horoscopes (zodiac, prevision) VALUES (?, ?)", (zodiac_, prevision_)
+#         cursor.execute(*sql)
+#         conn.commit()
+#     except Exception as e:
+#         print(f"Виникла помилка:\nERROR:{e}")
+
+
+def get_horoscope(horoscope):
+    sql = "SELECT prevision FROM horoscopes WHERE zodiac = ?", (horoscope,)
+    row = cursor.execute(*sql).fetchone()
+    return row[0]
