@@ -67,7 +67,7 @@ async def cmd_taxi(message: types.Message, state: FSMContext):
         f"📱 +38(098)-780-93-57 - Віталій\n\n"
         f"📱 +38(098)-637-98-05 - Ігор\n\n"
         f"📱 +38(095)-808-75-33 - Люкс таксі\n\n"
-        f"📱 +38(067)-520-37-41 - Люкс таксі", reply_markup=kb.back_btn)
+        f"📱 +38(067)-520-37-41 - Люкс таксі" + kb.links, reply_markup=kb.back_btn)
     await FSM_transport.taxi.set()
 
 
@@ -80,7 +80,7 @@ async def cmd_bus(message: types.Message, state: FSMContext):
         f"⏱ 12:00, ⏱ 13:25, ⏱ 16:30\n\n"
         f"Кропивницький - Олександрівка:\n"
         f"⏱ 07:30, ⏱ 08:50, ⏱ 10:00, ⏱ 12:20,\n"
-        f"⏱ 12:30, ⏱ 14:20, ⏱ 15:20, ⏱ 16:00\n\n", reply_markup=kb.back_btn)
+        f"⏱ 12:30, ⏱ 14:20, ⏱ 15:20, ⏱ 16:00" + kb.links, reply_markup=kb.back_btn)
     await FSM_transport.bus.set()
 
 
@@ -95,7 +95,7 @@ async def suburban_trains(message: types.Message, state: FSMContext):
                  f"🕰 Час прибуття: {train['time_start']}\n" \
                  f"⏱ Зупинка: {train['time_stop']}\n" \
                  f"🕰 Час відправлення: {train['time_end']}\n\n"
-    await message.answer(f"Розклад руху приміських поїздів через станцію Фундукліївка:\n\n" + trains_s,
+    await message.answer(f"Розклад руху приміських поїздів через станцію Фундукліївка:\n\n" + trains_s + kb.links,
                          reply_markup=kb.back_btn)
     await FSM_transport.suburban_trains.set()
 
@@ -111,7 +111,7 @@ async def suburban_trains(message: types.Message, state: FSMContext):
                  f"🕰 Час прибуття: {train['time_start']}\n" \
                  f"⏱ Зупинка: {train['time_stop']}\n" \
                  f"🕰 Час відправлення: {train['time_end']}\n\n"
-    await message.answer(f"Розклад руху пасажирських поїздів через станцію Фундукліївка:\n\n" + trains_p,
+    await message.answer(f"Розклад руху пасажирських поїздів через станцію Фундукліївка:\n\n" + trains_p + kb.links,
                          reply_markup=kb.back_btn)
     await FSM_transport.passenger_trains.set()
 
