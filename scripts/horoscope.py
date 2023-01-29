@@ -5,7 +5,7 @@ from db.db_connect import update_db_horoscope
 from settings.config import HOROSCOPE
 
 
-def update_horoscope():
+async def update_horoscope():
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0'

@@ -26,6 +26,7 @@ async def set_admin_commands(dp, admin_id):
             [
                 types.BotCommand("menu", "📋 Меню"),
                 types.BotCommand("statistics", "📊 Статистика"),
+                types.BotCommand("update_horoscope", "🔁 Оновити гороскоп"),
                 # types.BotCommand("fuels", "⛽ Наявність пального"),
                 # types.BotCommand("films", "🎬 Додати фільм в каталог"),
                 types.BotCommand("sender", "📨 Відправити повідомлення")
