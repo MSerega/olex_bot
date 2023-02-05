@@ -36,6 +36,17 @@ async def database():
             "prevision" TEXT DEFAULT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS "insurance" (
+            "id" INTEGER NOT NULL UNIQUE,
+            "user_id" INTEGER NOT NULL,
+            "office" TEXT DEFAULT NULL,
+            "identNumber" TEXT DEFAULT NULL,
+            "driverPassword" TEXT DEFAULT NULL,
+            "technicalPassword01" TEXT DEFAULT NULL,
+            "technicalPassword02" TEXT DEFAULT NULL,
+            "phoneOwnerCar" TEXT DEFAULT NULL,
+            PRIMARY KEY("id" AUTOINCREMENT)
+        );""")
         conn.commit()
         print("Успішне підключення до бази данних")
     except Exception as e:
@@ -111,6 +122,25 @@ def update_db_horoscope(zodiac_, prevision_):
 #         conn.commit()
 #     except Exception as e:
 #         print(f"Виникла помилка:\nERROR:{e}")
+
+def insurance_auto(data):
+    try:
+        sql = "INSERT INTO insurance (user_id, office, identNumber, driverPassword, technicalPassword01, " \
+              "technicalPassword02, phoneOwnerCar) VALUES (?, ?, ?, ?, ?, ?, ?)", tuple(data.values())
+        cursor.execute(*sql)
+        conn.commit()
+    except Exception as e:
+        print(f"Виникла помилка:\nERROR:{e}")
+
+
+def get_count_insurence():
+    try:
+        sql = "SELECT count(*) from insurance"
+        cursor.execute(sql)
+        counter = cursor.fetchone()[0]
+        return counter
+    except Exception as e:
+        print(f"Виникла помилка:\nERROR:{e}")
 
 
 def get_horoscope(horoscope):

@@ -9,7 +9,7 @@ main_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚨 Мапа тривог', '🛡 Безпека') \
     .row('🚌 Транспорт', '💵 Курс валют') \
     .row('🌤 Погода', '🚚 Пошта') \
-    .row('♏ Гороскоп')
+    .row('♏ Гороскоп', '🗄 Послуги')
 
 transport_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚕 Таксі', '🚌 Автобуси', '🚋 Поїзди').row('👈️ Назад')
@@ -42,10 +42,12 @@ zodiacs = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('♎ Терези', '♏ Скорпіон', '♐ Стрілець') \
     .row('♑ Козеріг', '♒ Водолій', '♓ Риби').row('👈️ Назад')
 
+services_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
+    .row('🚘 Автострахування',) \
+    .row('👈️ Назад')
 
-
-
-
+officeInsurance = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
+    .row('🚗 ТАС').row('📤 Скасувати')
 
 
 
