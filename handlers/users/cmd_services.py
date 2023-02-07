@@ -3,7 +3,6 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from db.db_connect import insurance_auto
 from loader import dp, bot
@@ -20,6 +19,10 @@ class FSM_services(StatesGroup):
     technical_passport01 = State()
     technical_passport02 = State()
     phone_ownerCar = State()
+    # Послуга Інтернет
+    providers_internet = State()
+    homeNet = State()
+    svitNet = State()
 
 
 @dp.message_handler(text="🗄 Послуги", chat_type=types.ChatType.PRIVATE, state="*")
@@ -35,9 +38,12 @@ async def cmd_services(message: types.Message):
 async def back_state(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
     state_ = current_state.split(':')[1]
-    if state_ in ['insurance']:
+    if state_ in ['officeInsurance', 'providers_internet']:
         await FSM_services.services.set()
         await message.answer("Оберіть послугу", reply_markup=kb.services_menu)
+    if state_ in ['homeNet', 'svitNet']:
+        await FSM_services.providers_internet.set()
+        await message.answer("Оберіть провайдера", reply_markup=kb.internetProviders)
     elif state_ == 'services':
         if current_state is None:
             return
@@ -144,3 +150,23 @@ async def get_phoneOwnerCar(message: types.Message, state: FSMContext):
         await FSM_services.services.set()
         await message.answer("Дякуємо. Ваші дані прийнято в обробку. Чекайте на дзвінок від стахової компанії",
                              reply_markup=kb.services_menu)
+
+
+@dp.message_handler(Text(equals="🌐 Інтернет"), state=FSM_services.services)
+async def cmd_providers(message: types.Message, state: FSMContext):
+    await message.answer("Оберіть інтернет провайдера", reply_markup=kb.internetProviders)
+    await FSM_services.providers_internet.set()
+
+
+@dp.message_handler(Text(equals="📶 HomeNet"), state=FSM_services.providers_internet)
+async def cmd_insurance(message: types.Message, state: FSMContext):
+    await message.answer("Для підключення інтернету від провайдера \"HomeNet\" "
+                         "зателефонуйте за номером:\n📱 +38(067)-408-18-58", reply_markup=kb.back_btn)
+    await FSM_services.homeNet.set()
+
+
+@dp.message_handler(Text(equals="📶 SvitNet"), state=FSM_services.providers_internet)
+async def cmd_insurance(message: types.Message, state: FSMContext):
+    await message.answer("Для підключення інтернету від провайдера \"SvitNet\" "
+                         "зателефонуйте за номером:\n📱 +38(068)-881-62-04", reply_markup=kb.back_btn)
+    await FSM_services.svitNet.set()
