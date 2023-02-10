@@ -26,8 +26,6 @@ async def database():
             "first_name"	TEXT DEFAULT NULL,
             "last_name"	TEXT DEFAULT NULL,
             "full_name"	TEXT DEFAULT NULL,
-            "mute_time"	INTEGER DEFAULT 0,
-            "ban_time"	INTEGER DEFAULT 0,
             PRIMARY KEY("id" AUTOINCREMENT)
         );""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS "horoscopes" (
@@ -147,3 +145,4 @@ def get_horoscope(horoscope):
     sql = "SELECT prevision FROM horoscopes WHERE zodiac = ?", (horoscope,)
     row = cursor.execute(*sql).fetchone()
     return row[0]
+

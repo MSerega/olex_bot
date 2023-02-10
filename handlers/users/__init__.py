@@ -9,4 +9,5 @@ from . import cmd_advertising
 from . import cmd_poshta
 from . import cmd_horoscope
 from . import cmd_services
+from . import cmd_vote_mute
 from . import other

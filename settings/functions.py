@@ -1,6 +1,5 @@
 import asyncio
 from contextlib import suppress
-from shlex import join
 
 from aiogram import types
 from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFound

@@ -11,7 +11,7 @@ BOT_TOKEN = env.str("BOT_TOKEN")
 DB_BASE = os.path.abspath("db/" + env.str("DB_BASE"))
 
 # Admin users
-SUPPORT_ADMINS = [145333452]
+SUPPORT_ADMINS = [145333452, 637190452]
 ADMIN = 145333452
 
 # Channels
