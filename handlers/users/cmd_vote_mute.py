@@ -23,11 +23,11 @@ async def cmd_mute(message: types.Message):
             await message.delete()
             await message.answer(f"Користувач <a href=\"{voter_user.url}\">{voter_user.full_name}</a>"
                                  f" хоче заблокувати користувача <a href=\"{banned_user.url}\">{banned_user.full_name}</a>."
-                                 f"\nГолосування триватиме 5 хвилин. Після закінчення голосування буде прийнято рішення.")
+                                 f"\nГолосування триватиме 5 хвилин. Якщо буде набрано 10 голосів, користувача буде заблоковано.")
             msg = await bot.send_poll(chat_id=message.chat.id, is_anonymous=False,
-                                      question=f"Бажаєте заблокувати користувача {voter_user.full_name}?",
+                                      question=f"Бажаєте заблокувати користувача {banned_user.full_name}?",
                                       options=["Заблокувати", "Пробачити"])
-            await asyncio.sleep(15)
+            await asyncio.sleep(300)
             poll = await bot.stop_poll(chat_id=message.chat.id, message_id=msg.message_id)
 
             if poll.options[0].voter_count >= 10:
