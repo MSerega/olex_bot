@@ -10,13 +10,13 @@ from settings.config import SUPPORT_ADMINS
                     chat_type=[types.ChatType.GROUP, types.ChatType.SUPERGROUP],
                     state="*")
 async def cmd_mute(message: types.Message):
-    banned_user = message.reply_to_message.from_user
-    voter_user = message.from_user
-    status_user = await bot.get_chat_member(message.chat.id, banned_user.id)
-    duration = datetime.timedelta(hours=1)
     if not message.reply_to_message:
         await message.reply('Ця команда повинна бути відповіддю на повідомлення!')
     else:
+        banned_user = message.reply_to_message.from_user
+        voter_user = message.from_user
+        status_user = await bot.get_chat_member(message.chat.id, banned_user.id)
+        duration = datetime.timedelta(hours=1)
         if banned_user.id in SUPPORT_ADMINS:
             await message.answer("Адміністраторів групи не можна заблокувати, хто ж буде слідкувати за порядком?")
         elif status_user.status != "restricted":
