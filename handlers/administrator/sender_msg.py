@@ -4,12 +4,13 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 from loader import dp, bot
 from keyboards.default import links
-from settings.config import ADMIN
+from settings.config import ADMIN, c_pidsluhano_id, g_pidsluhano_id
 
 
 class FSMAdmin(StatesGroup):
     chat_id = State()
     message_text = State()
+    btns = State()
     btn_name = State()
     btn_link = State()
 
@@ -18,7 +19,7 @@ class FSMAdmin(StatesGroup):
 async def cmd_sender(message: types.Message):
     await FSMAdmin.chat_id.set()
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-        .row('-1001466681334', '-1001247030550').row('📤 Відміна')
+        .row('📢 Канал', '👩‍👩‍👧‍👧 Група').row('📤 Відміна')
     await message.answer("Введіть id чата", reply_markup=markup)
 
 
@@ -34,26 +35,49 @@ async def cancel_handler(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=FSMAdmin.chat_id)
 async def set_id(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        data['chat_id'] = message.text
-    await FSMAdmin.next()
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('📤 Відміна')
-    await message.answer('Введіть текст', reply_markup=markup)
+    if message.text == '📢 Канал':
+        async with state.proxy() as data:
+            data['chat_id'] = c_pidsluhano_id
+    elif message.text == '👩‍👩‍👧‍👧 Група':
+        async with state.proxy() as data:
+            data['chat_id'] = g_pidsluhano_id
+    elif message.forward_from:
+        async with state.proxy() as data:
+            data['chat_id'] = message.forward_from.id
+    else:
+        async with state.proxy() as data:
+            data['chat_id'] = message.text
+        await FSMAdmin.next()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('📤 Відміна')
+        await message.answer('Введіть текст', reply_markup=markup)
 
 
 @dp.message_handler(state=FSMAdmin.message_text)
 async def message_text(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['message_text'] = message.text
-    await FSMAdmin.next()
-    await message.answer('Назва кнопки')
+    await FSMAdmin.btns.set()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('Так', 'Ні').row('📤 Відміна')
+    await message.answer('Ви будете довати з кнопкою чи без', reply_markup=markup)
+
+
+@dp.message_handler(Text(equals=['Так', 'Ні']), state=FSMAdmin.btns)
+async def btn_yes(message: types.Message, state: FSMContext):
+    if message.text == 'Так':
+        await FSMAdmin.btn_name.set()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('📤 Відміна')
+        await message.answer('Введіть назву кнопки', reply_markup=markup)
+    else:
+        async with state.proxy() as data:
+            await bot.send_message(data['chat_id'], data['message_text'])
+        await state.finish()
 
 
 @dp.message_handler(state=FSMAdmin.btn_name)
 async def btn_name(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['btn_name'] = message.text
-    await FSMAdmin.next()
+    await FSMAdmin.btn_link.set()
     await message.answer('Введіть посилання')
 
 
@@ -66,25 +90,7 @@ async def btn_link(message: types.Message, state: FSMContext):
         link = types.InlineKeyboardButton(data['btn_name'], url=f"{data['btn_link']}")
         keyboard.row(link)
 
-        await bot.send_message(data['chat_id'], data['message_text'] + links, reply_markup=keyboard)
+        await bot.send_message(data['chat_id'], data['message_text'], reply_markup=keyboard)
 
     await state.finish()
 
-
-# @dp.callback_query_handler(text_startswith="change_status_but:")
-# async def edit_button_text(call: types.CallbackQuery):
-#     message_id = call.message.message_id
-#     chat_id = call.message.chat.id
-#
-#     link = call.message.reply_markup.inline_keyboard[0][0].url
-#     print(link)
-#
-#     keyboard = types.InlineKeyboardMarkup()
-#     keyboard.row(types.InlineKeyboardButton('🖥 Дивитись онлайн', url=f"{link}"))
-#
-#     if call.data.split(":")[1] == 'yes':
-#         keyboard.row(types.InlineKeyboardButton('✅ Статус: Переглянутий', callback_data="change_status_but:no"))
-#     else:
-#         keyboard.row(types.InlineKeyboardButton('❌ Статус: не переглянутий', callback_data="change_status_but:yes"))
-#
-#     await bot.edit_message_reply_markup(chat_id=chat_id, message_id=message_id, reply_markup=keyboard)
