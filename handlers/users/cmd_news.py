@@ -43,7 +43,7 @@ async def set_title_news(message: types.Message, state: FSMContext):
 async def set_text_news(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         kb_connect = types.InlineKeyboardMarkup().row(
-            types.InlineKeyboardButton("✉ З'язатись з автором новини", url=f"tg://user?id={data['user_id']}"))
+            types.InlineKeyboardButton("✉ Зв'язатись з автором новини", url=f"tg://user?id={data['user_id']}"))
         if not message.text:
             data['photo_id'] = message.photo[0].file_id
             data['caption'] = message.caption

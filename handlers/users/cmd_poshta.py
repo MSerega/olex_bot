@@ -105,12 +105,12 @@ async def ukrposhta_address(message: types.Message, state: FSMContext):
 async def ukrposhta_graffic(message: types.Message, state: FSMContext):
     await message.answer(
         f"<b>Графік роботи відділення Укрпошти:</b>\n"
-        "Пн: 08:00-17:00\n"
-        "Вт: 08:00-17:00\n"
-        "Ср: 08:00-17:00\n"
-        "Чт: 08:00-17:00\n"
-        "Пт: 08:00-17:00\n"
-        "Сб: 08:00-14:00\n",
+        "Пн: 08:00-18:00\n"
+        "Вт: 08:00-18:00\n"
+        "Ср: 08:00-18:00\n"
+        "Чт: 08:00-18:00\n"
+        "Пт: 08:00-18:00\n"
+        "Сб: 09:00-15:00\n",
         reply_markup=kb.back_btn)
     await FSM_poshta.ukr_info.set()
 

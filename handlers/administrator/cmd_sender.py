@@ -3,7 +3,6 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 from loader import dp, bot
-from keyboards.default import links
 from settings.config import ADMIN, c_pidsluhano_id, g_pidsluhano_id
 
 
@@ -47,9 +46,10 @@ async def set_id(message: types.Message, state: FSMContext):
     else:
         async with state.proxy() as data:
             data['chat_id'] = message.text
-        await FSMAdmin.next()
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('📤 Відміна')
-        await message.answer('Введіть текст', reply_markup=markup)
+    await FSMAdmin.next()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('📤 Відміна')
+    await message.answer('Введіть текст', reply_markup=markup)
+    await bot.reply_to_message()
 
 
 @dp.message_handler(state=FSMAdmin.message_text)
@@ -69,7 +69,7 @@ async def btn_yes(message: types.Message, state: FSMContext):
         await message.answer('Введіть назву кнопки', reply_markup=markup)
     else:
         async with state.proxy() as data:
-            await bot.send_message(data['chat_id'], data['message_text'])
+            await bot.send_message(data['chat_id'], data['message_text'], reply_markup=types.ReplyKeyboardRemove())
         await state.finish()
 
 
