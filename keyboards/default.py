@@ -9,7 +9,7 @@ main_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚨 Мапа тривог', '🗄 Послуги') \
     .row('🚌 Транспорт', '🚚 Пошта') \
     .row('🌤 Погода', '♏ Гороскоп') \
-    .row('💵 Курс валют', '🛡 Безпека2')
+    .row('💵 Курс валют', '🛡 Безпека')
 
 transport_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚕 Таксі', '🚌 Автобуси', '🚋 Поїзди').row('👈️ Назад')
