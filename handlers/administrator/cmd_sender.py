@@ -4,11 +4,12 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 from loader import dp, bot
 from settings.config import ADMIN, c_pidsluhano_id, g_pidsluhano_id
-
+from keyboards.default import links
 
 class FSMAdmin(StatesGroup):
     chat_id = State()
     message_text = State()
+    links_text = State()
     photos = State()
     photo_id = State()
     btns = State()
@@ -57,21 +58,35 @@ async def set_id(message: types.Message, state: FSMContext):
 async def message_text(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['message_text'] = message.text
+    await FSMAdmin.links_text.set()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('✅ Так', '❌ Ні').row('📤 Відміна')
+    await message.answer('Ви будете додавати лінки?'+ links, reply_markup=markup)
+
+
+@dp.message_handler(Text(equals=['✅ Так', '❌ Ні']), state=FSMAdmin.links_text)
+async def links_text(message: types.Message, state: FSMContext):
+    if message.text == '✅ Так':
+        async with state.proxy() as data:
+            data['links'] = links
+    elif message.text == '❌ Ні':
+        async with state.proxy() as data:
+            data['links'] = ''
+
     await FSMAdmin.photos.set()
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('Так', 'Ні').row('📤 Відміна')
-    await message.answer('Ви будете довати фото?', reply_markup=markup)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('✅ Так', '❌ Ні').row('📤 Відміна')
+    await message.answer('Ви будете додавати фото 🏞 ?', reply_markup=markup)
 
 
-@dp.message_handler(Text(equals=['Так', 'Ні']), state=FSMAdmin.photos)
+@dp.message_handler(Text(equals=['✅ Так', '❌ Ні']), state=FSMAdmin.photos)
 async def if_photo(message: types.Message, state: FSMContext):
-    if message.text == 'Так':
+    if message.text == '✅ Так':
         await message.answer('Завантажте фото')
         await FSMAdmin.photo_id.set()
-    elif message.text == 'Ні':
+    elif message.text == '❌ Ні':
         async with state.proxy() as data:
             data['photo_id'] = None
         await FSMAdmin.btns.set()
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('Так', 'Ні').row('📤 Відміна')
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('✅ Так', '❌ Ні').row('📤 Відміна')
         await message.answer('Додати кнопку?', reply_markup=markup)
 
 
@@ -79,23 +94,23 @@ async def if_photo(message: types.Message, state: FSMContext):
 async def photo_id(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['photo_id'] = message.photo[0].file_id
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('Так', 'Ні').row('📤 Відміна')
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('✅ Так', '❌ Ні').row('📤 Відміна')
     await message.answer('Додати кнопку?', reply_markup=markup)
     await FSMAdmin.btns.set()
 
 
-@dp.message_handler(Text(equals=['Так', 'Ні']), state=FSMAdmin.btns)
+@dp.message_handler(Text(equals=['✅ Так', '❌ Ні']), state=FSMAdmin.btns)
 async def btn_yes(message: types.Message, state: FSMContext):
-    if message.text == 'Так':
+    if message.text == '✅ Так':
         await FSMAdmin.btn_name.set()
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add('📤 Відміна')
         await message.answer('Введіть назву кнопки', reply_markup=markup)
-    else:
+    if message.text == '❌ Ні':
         async with state.proxy() as data:
             if data['photo_id'] is None:
-                await bot.send_message(data['chat_id'], data['message_text'], reply_markup=types.ReplyKeyboardRemove())
+                await bot.send_message(data['chat_id'], data['message_text'] + data['links'], reply_markup=types.ReplyKeyboardRemove())
             else:
-                await bot.send_photo(data['chat_id'], data['photo_id'], caption=data['message_text'],
+                await bot.send_photo(data['chat_id'], data['photo_id'], caption=data['message_text'] + data['links'],
                                      reply_markup=types.ReplyKeyboardRemove())
         await state.finish()
 
@@ -118,8 +133,8 @@ async def btn_link(message: types.Message, state: FSMContext):
         keyboard.row(link)
 
     if data['photo_id'] is None:
-            await bot.send_message(data['chat_id'], data['message_text'], reply_markup=keyboard)
+            await bot.send_message(data['chat_id'], data['message_text'] + data['links'], reply_markup=keyboard)
     else:
-            await bot.send_photo(data['chat_id'], data['photo_id'], caption=data['message_text'], reply_markup=keyboard)
+            await bot.send_photo(data['chat_id'], data['photo_id'], caption=data['message_text'] + data['links'], reply_markup=keyboard)
     await state.finish()
 
