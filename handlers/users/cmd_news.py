@@ -32,8 +32,11 @@ async def cancel_handler(message: types.Message, state: FSMContext):
 @dp.message_handler(state=FSMAdmin.title_news)
 async def set_title_news(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data['user_id'] = message.from_user.id
-        data['title_news'] = message.text
+        if message.chat.has_private_forwards:
+            data['user_id'] = "Невідомий користувач"
+        else:
+            data['user_id'] = message.from_user.id
+            data['title_news'] = message.text
     await FSMAdmin.next()
     await message.answer('Опишіть новину, якщо є фото також можете прикріпити, опис новини потрібно вказати під фото',
                          reply_markup=kb.cancel_fsm)
