@@ -45,7 +45,7 @@ async def back_state(message: types.Message, state: FSMContext):
         await message.answer("Ви в головному меню. Оберіть пункт меню", reply_markup=kb.main_menu)
 
 
-@dp.message_handler(Text(equals="🚋 Поїзди"), state=FSM_transport.transport)
+@dp.message_handler(Text(equals="🚋 Потяги"), state=FSM_transport.transport)
 async def trains(message: types.Message, state: FSMContext):
     await message.answer("Оберіть пункт меню", reply_markup=kb.trains_menu)
     await FSM_transport.trains.set()
@@ -69,7 +69,7 @@ async def cmd_taxi(message: types.Message, state: FSMContext):
         f"📱 +38(098)-637-98-05 - Ігор\n\n"
         f"📱 +38(095)-808-75-33 - Люкс таксі\n\n"
         f"📱 +38(067)-520-37-41 - Люкс таксі\n\n"
-        f"📱 +38(098)-801-54-80 - Нове таксі\n\n" + kb.links, reply_markup=kb.back_btn)
+        f"📱 +38(098)-801-54-80 - Нове таксі" + kb.links, reply_markup=kb.back_btn)
     await FSM_transport.taxi.set()
 
 
@@ -86,7 +86,15 @@ async def cmd_bus(message: types.Message, state: FSMContext):
     await FSM_transport.bus.set()
 
 
-@dp.message_handler(Text(equals="🚞 Приміські поїзди"), state=FSM_transport.trains)
+@dp.message_handler(Text(equals="🏫 Заліжничний вокзал"), state=FSM_transport.trains)
+async def suburban_trains(message: types.Message, state: FSMContext):
+    await message.answer(f"🏫 Назва станції: \"Фундукліївка\"\n\n"
+                         f"📬 Адреса:\nсмт Олександрівка,\nвул. Залізнична, 1\n\n"
+                         f"📱 Телефон для довідок:\n +38(052)423-27-10" + kb.links, reply_markup=kb.back_btn)
+    await FSM_transport.vokzal.set()
+
+
+@dp.message_handler(Text(equals="🚞 Приміські потяги"), state=FSM_transport.trains)
 async def suburban_trains(message: types.Message, state: FSMContext):
     trains_list = get_suburnan_trains()
     trains_s = ''
@@ -102,7 +110,7 @@ async def suburban_trains(message: types.Message, state: FSMContext):
     await FSM_transport.suburban_trains.set()
 
 
-@dp.message_handler(Text(equals="🚞 Пасажирські поїзди"), state=FSM_transport.trains)
+@dp.message_handler(Text(equals="🚞 Пасажирські потяги"), state=FSM_transport.trains)
 async def suburban_trains(message: types.Message, state: FSMContext):
     trains_list = get_passenger_trains()
     trains_p = ''
@@ -118,7 +126,3 @@ async def suburban_trains(message: types.Message, state: FSMContext):
     await FSM_transport.passenger_trains.set()
 
 
-@dp.message_handler(Text(equals="🏫 Заліжничний вокзал"), state=FSM_transport.trains)
-async def suburban_trains(message: types.Message, state: FSMContext):
-    await message.answer(f"Номер телефону станції Фундукліївка: \n\n📱 +38(052)423-27-10" + kb.links, reply_markup=kb.back_btn)
-    await FSM_transport.vokzal.set()

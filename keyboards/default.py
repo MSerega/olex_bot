@@ -12,7 +12,7 @@ main_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('💵 Курс валют', '🛡 Безпека')
 
 transport_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🚕 Таксі', '🚌 Автобуси', '🚋 Поїзди').row('👈️ Назад')
+    .row('🚕 Таксі', '🚌 Автобуси', '🚋 Потяги').row('👈️ Назад')
 
 back_btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('👈️ Назад')
@@ -34,7 +34,7 @@ security_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True
     .row('🔥 Гаряча лінія').row('🏨 Пункти незламності').row('👈️ Назад')
 
 trains_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🏫 Заліжничний вокзал').row('🚞 Приміські поїзди').row('🚞 Пасажирські поїзди').row('👈️ Назад')
+    .row('🏫 Заліжничний вокзал').row('🚞 Приміські потяги').row('🚞 Пасажирські потяги').row('👈️ Назад')
 
 zodiacs = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('♈ Овен', '♉ Тілець', '♊ Близнюки') \
