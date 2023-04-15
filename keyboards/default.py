@@ -34,7 +34,7 @@ security_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True
     .row('🔥 Гаряча лінія').row('🏨 Пункти незламності').row('👈️ Назад')
 
 trains_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🚞 Приміські поїзди').row('🚞 Пасажирські поїзди').row('👈️ Назад')
+    .row('🏫 Заліжничний вокзал').row('🚞 Приміські поїзди').row('🚞 Пасажирські поїзди').row('👈️ Назад')
 
 zodiacs = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('♈ Овен', '♉ Тілець', '♊ Близнюки') \
@@ -43,8 +43,7 @@ zodiacs = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('♑ Козеріг', '♒ Водолій', '♓ Риби').row('👈️ Назад')
 
 services_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🚘 Автострахування').row('🌐 Інтернет') \
-    .row('👈️ Назад')
+    .row('🚘 Автострахування').row('🌐 Інтернет', '🚑 Медицина').row('👈️ Назад')
 
 officeInsurance = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚗 ТАС').row('👈️ Назад')
@@ -52,7 +51,8 @@ officeInsurance = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=Tr
 internetProviders = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('📶 HomeNet', '📶 SvitNet').row('👈️ Назад')
 
-
+medicine_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
+    .row('🏥 Лікарня', '🐶 Ветеринари').row('👈️ Назад')
 
 
 
