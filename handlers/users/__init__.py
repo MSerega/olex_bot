@@ -13,4 +13,5 @@ from . import cmd_chatgpt
 from . import cmd_medicine
 from . import cmd_autostrah
 from . import cmd_internet
+from . import cmd_business_center_porydok
 from . import other
