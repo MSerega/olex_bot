@@ -17,7 +17,6 @@ transport_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=Tru
 back_btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('👈️ Назад')
 
-
 cancel_fsm = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .add('📤 Скасувати')
 
@@ -43,7 +42,7 @@ zodiacs = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('♑ Козеріг', '♒ Водолій', '♓ Риби').row('👈️ Назад')
 
 services_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🎮 Розваги').row('🚘 Автострахування').row('🚑 Медицина').row('🌐 Інтернет').row('👈️ Назад')
+    .row('🎮 Розваги').row('🚘 Автострахування').row('🚑 Медицина', '🌐 Інтернет').row('👈️ Назад')
 
 officeInsurance = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚗 ТАС').row('👈️ Назад')
@@ -61,11 +60,12 @@ cmd_business_center_info = ReplyKeyboardMarkup(resize_keyboard=True, one_time_ke
     .row('🧾 Послуги', '🗺 Ми на карті').row('👈️ Назад')
 
 cmd_business_center_services = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🙍‍♀ Краса', '❤ Здоров\'я')\
-    .row('🕹 Розваги', '🛠 Виробництво').row('👈️ Назад')
+    .row('🙍‍♀ Краса', '❤ Здоров\'я') \
+    .row('🕹 Розваги', '🛠 Виробництво') \
+    .row('🚛 Перевезення', '👈️ Назад')
 
 cmd_business_center_krasa = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('➡ Манікюр','➡ Парикмахер').row('➡ Візажист','👈️ Назад')
+    .row('➡ Манікюр', '➡ Парикмахер').row('➡ Візажист', '👈️ Назад')
 
 cmd_business_center_medicine = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('➡ Масажист', '➡ Стоматолог').row('➡ Косметолог', '👈️ Назад')

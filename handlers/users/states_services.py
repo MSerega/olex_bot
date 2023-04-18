@@ -31,9 +31,13 @@ class FSM_services(StatesGroup):
     business_center_poradok = State()
     business_center_services = State()
     business_center_krasa = State()
+    business_center_krasa_info = State()
     business_center_medicine = State()
+    business_center_medicine_info = State()
     business_center_building = State()
     business_center_funs = State()
+    business_center_funs_info = State()
+    business_center_transport = State()
 
 
 @dp.message_handler(text="🗄 Послуги", chat_type=types.ChatType.PRIVATE, state="*")
@@ -55,18 +59,37 @@ async def back_state(message: types.Message, state: FSMContext):
     if state_ in ['homeNet', 'svitNet']:
         await FSM_services.internet_providers.set()
         await message.answer("Оберіть провайдера", reply_markup=kb.internetProviders)
-    if state_ in ['business_center_services']:
-        await FSM_services.business_center_poradok.set()
-        await message.answer("Оберіть послугу", reply_markup=kb.funs_menu)
+
     if state_ in ['business_center_poradok']:
         await FSM_services.menu_funs.set()
         await message.answer("Оберіть послугу", reply_markup=kb.funs_menu)
-    if state_ in ['business_center_krasa', 'business_center_medicine', 'business_center_building', 'business_center_funs']:
+
+    if state_ in ['business_center_services']:
+        await FSM_services.business_center_poradok.set()
+        await message.answer("🏢 Бізнес-центр \"Порядок\"\n🗺 Адреса: смт Олександрівка, вул. Пушкіна, 15",
+                             reply_markup=kb.cmd_business_center_info)
+
+    if state_ in ['business_center_krasa', 'business_center_medicine',
+                  'business_center_building', 'business_center_funs', 'business_center_transport']:
         await FSM_services.business_center_services.set()
         await message.answer("Оберіть послугу", reply_markup=kb.cmd_business_center_services)
+
+    if state_ in ['business_center_krasa_info']:
+        await FSM_services.business_center_krasa.set()
+        await message.answer("Оберіть послугу", reply_markup=kb.cmd_business_center_krasa)
+
+    if state_ in ['business_center_medicine_info']:
+        await FSM_services.business_center_medicine.set()
+        await message.answer("Оберіть послугу", reply_markup=kb.cmd_business_center_medicine)
+
+    if state_ in ['business_center_funs_info']:
+        await FSM_services.business_center_funs.set()
+        await message.answer("Оберіть послугу", reply_markup=kb.cmd_business_center_funs)
+
     if state_ in ['reception', 'veterinarians']:
         await FSM_services.menu_medicine.set()
         await message.answer("Оберіть послугу", reply_markup=kb.medicine_menu)
+
     elif state_ == 'services':
         if current_state is None:
             return
