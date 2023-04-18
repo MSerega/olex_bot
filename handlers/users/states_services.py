@@ -30,6 +30,7 @@ class FSM_services(StatesGroup):
     # Розваги Бізнес центр порядок
     business_center_poradok = State()
     business_center_services = State()
+    business_center_map = State()
     business_center_krasa = State()
     business_center_krasa_info = State()
     business_center_medicine = State()
@@ -64,10 +65,12 @@ async def back_state(message: types.Message, state: FSMContext):
         await FSM_services.menu_funs.set()
         await message.answer("Оберіть послугу", reply_markup=kb.funs_menu)
 
-    if state_ in ['business_center_services']:
+    if state_ in ['business_center_services', 'business_center_map']:
         await FSM_services.business_center_poradok.set()
-        await message.answer("🏢 Бізнес-центр \"Порядок\"\n🗺 Адреса: смт Олександрівка, вул. Пушкіна, 15",
-                             reply_markup=kb.cmd_business_center_info)
+        await message.answer(f"🏢 Бізнес-центр \"Порядок\"\n\n"
+                             "🗺 Адреса: смт Олександрівка,\n      вул. Пушкіна, 15\n\n"
+                             "👩‍👦‍👦 Ми у Facebook: <a href=\"https://www.facebook.com/groups/565954754170059\">➕ Приєднатись</a>",
+                             reply_markup=kb.cmd_business_center_info, disable_web_page_preview=True)
 
     if state_ in ['business_center_krasa', 'business_center_medicine',
                   'business_center_building', 'business_center_funs', 'business_center_transport']:

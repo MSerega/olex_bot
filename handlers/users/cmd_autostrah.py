@@ -8,7 +8,7 @@ from .states_services import FSM_services
 from db.db_connect import insurance_auto
 
 
-@dp.message_handler(Text(equals="🚘 Автострахування"), state=FSM_services.services)
+@dp.message_handler(Text(equals="🚘 Cтрахування"), state=FSM_services.services)
 async def cmd_insurance(message: types.Message, state: FSMContext):
     await message.answer("Для страхування вашого авто потрібно заповнити наступні дані")
     await asyncio.sleep(1)
