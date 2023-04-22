@@ -114,7 +114,7 @@ async def cmd_bissness_center_funs_center(message: types.Message, state: FSMCont
                          f"🏙 Знаходиться: 2 поверх, каб. №12.\n\n"
                          f"🕰 Графік роботи:\n"
                          f"Вт: 🕐 13:00 - 🕖 19:00\n"
-                         f"Сб: 🕐 13:00 - 🕖 19:00\n\n"
+                         f"Сб: 🕐 11:00 - 🕖 19:00\n\n"
                          f"📱 Телефон: +38(068)349-64-41", reply_markup=kb.back_btn)
     await FSM_services.business_center_funs_info.set()
 
