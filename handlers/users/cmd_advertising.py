@@ -18,7 +18,7 @@ class FSMAdmin(StatesGroup):
 async def advertising(message: types.Message):
     await userInDb(message)
     await message.answer("Якщо ви бажаєте, щоб ваше комерційне оголошення (куплю/продам/послуги) "
-                         "було опубліковане в групі чи каналі - прошу попередньо, перерахувати 80 грн на розвиток "
+                         "було опубліковане в групі чи каналі - прошу попередньо, перерахувати 100 грн на розвиток "
                          "групи",
                          reply_markup=kb.inline.advertising, disable_notification=True)
 
