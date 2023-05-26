@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from loader import dp
 import keyboards.default as kb
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 class TextGeneration(StatesGroup):

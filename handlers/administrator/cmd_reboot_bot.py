@@ -8,7 +8,7 @@ from settings.config import ADMIN
 @dp.message_handler(commands=['reboot_bot'], chat_type=types.ChatType.PRIVATE, chat_id=ADMIN, state="*")
 async def command_start(message: types.Message):
     try:
-        subprocess.call(["pm2", "restart", "0"])
         await message.answer(f"Перезавантаження бота", disable_notification=True)
-    except:
+        subprocess.call(["pm2", "restart", "0"])
+    except subprocess.CalledProcessError:
         await message.answer(f"Сталась помилка перезавантаження", disable_notification=True)
