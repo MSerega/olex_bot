@@ -25,7 +25,8 @@ async def set_admin_commands(dp, admin_id):
                 types.BotCommand("menu", "📋 Меню"),
                 types.BotCommand("statistics", "📊 Статистика"),
                 types.BotCommand("sender", "📨 Відправити повідомлення"),
-                types.BotCommand("chatgpt", "✏ Чат GPT")
+                types.BotCommand("chatgpt", "✏ Чат GPT"),
+                types.BotCommand("reboot_bot", "🔄 Перезавантажити бота")
             ],
             scope=types.bot_command_scope.BotCommandScopeChat(admin_id)
         )
