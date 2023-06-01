@@ -42,7 +42,7 @@ zodiacs = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('♑ Козеріг', '♒ Водолій', '♓ Риби').row('👈️ Назад')
 
 services_menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
-    .row('🎮 Розваги', '🚘 Cтрахування').row('🚑 Медицина', '🌐 Інтернет').row('👈️ Назад')
+    .row('🎮 Розваги', '🚘 Cтрахування').row('🚑 Медицина', '🌐 Інтернет').row("🧧 Паспортний стіл").row('👈️ Назад')
 
 officeInsurance = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True) \
     .row('🚗 ТАС').row('👈️ Назад')
