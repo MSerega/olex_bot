@@ -39,7 +39,8 @@ class FSM_services(StatesGroup):
     business_center_funs = State()
     business_center_funs_info = State()
     business_center_transport = State()
-
+    # Паспортний стіл
+    passport_table = State()
 
 @dp.message_handler(text="🗄 Послуги", chat_type=types.ChatType.PRIVATE, state="*")
 async def cmd_services(message: types.Message):
@@ -54,7 +55,7 @@ async def cmd_services(message: types.Message):
 async def back_state(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
     state_ = current_state.split(':')[1]
-    if state_ in ['officeInsurance', 'internet_providers', 'menu_medicine', "menu_funs"]:
+    if state_ in ['officeInsurance', 'internet_providers', 'menu_medicine', "menu_funs", "passport_table"]:
         await FSM_services.services.set()
         await message.answer("Оберіть послугу", reply_markup=kb.services_menu)
     if state_ in ['homeNet', 'svitNet']:

@@ -13,4 +13,5 @@ from . import cmd_medicine
 from . import cmd_autostrah
 from . import cmd_internet
 from . import cmd_business_center_porydok
+from . import cmd_passport_table
 from . import other
