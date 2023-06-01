@@ -60,6 +60,6 @@ async def cmd_passport_table(message: types.Message, state: FSMContext):
                        f"<b>Графік роботи:</b>\n\n"\
                        f"{work_graffic}"
 
-        await message.answer(message_text)
+        await message.answer(message_text, reply_markup=kb.back_btn)
     else:
         await message.answer("Не вдалося знайти необхідну інформацію. Cпробуйте ще раз")
