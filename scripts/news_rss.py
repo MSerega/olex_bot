@@ -8,6 +8,7 @@ from loader import bot
 from db.db_connect import check_rss_news_exists, add_rss_news
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards import default as kb
+from settings.config import c_pidsluhano_id
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -60,12 +61,12 @@ async def generalised_parse():
                 message = f"💬 {newEntry['source_description']}:\n\n<b>{newEntry['title']}{kb.links}</b>"
 
                 if latest_entry.enclosures:
-                    await bot.send_photo(-1001636677869, newEntry['image'], caption=message, reply_markup=link_button)
+                    await bot.send_photo(c_pidsluhano_id, newEntry['image'], caption=message, reply_markup=link_button)
                 else:
-                    await bot.send_message(-1001636677869, message, reply_markup=link_button)
+                    await bot.send_message(c_pidsluhano_id, message, reply_markup=link_button)
 
                 add_rss_news(feed_url, newEntry["title"], newEntry["link"])
-                await asyncio.sleep(100)
+                await asyncio.sleep(1500)
     return newsInfo
 
 

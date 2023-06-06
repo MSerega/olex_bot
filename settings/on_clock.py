@@ -13,7 +13,6 @@ async def scheduler():
     aioschedule.every().day.at("9:00").do(handlers.channels.morning_pidsluhaho.morning_memory)
     aioschedule.every().day.at("23:00").do(handlers.groups.change_permissions.message_permissions_block)
     aioschedule.every(7).to(23).hours.do(rss_start)
-    await rss_start()
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
