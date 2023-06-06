@@ -1,7 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup
 
-links = '\n\n<a href="https://t.me/olexandrivka">✏ Наш канал</a>' \
-        ' <a href="https://t.me/olexandrivka_chat">👩‍👦‍👦 Cпільнота</a>' \
+links = '\n\n<a href="https://t.me/olexandrivka">✏ Наш канал у Telegram</a>' \
+        '\n<a href="https://t.me/olexandrivka_chat">👩‍👦‍👦 Наша група у Telegram</a>' \
         '\n<a href="https://t.me/olexandrivka_bot?start=news">🧾 Запропонувати новину</a>' \
         '\n<a href="https://t.me/olexandrivka_bot?start=advertising">💶 Замовити рекламу</a>'
 
