@@ -20,8 +20,6 @@ async def generalised_parse():
          "description": "Новини Олександрівської територіальної громади"}
     ]
 
-    newsInfo = []
-
     for feed in feed_urls:
         feed_url = feed["url"]
         feed_description = feed["description"]
@@ -52,7 +50,6 @@ async def generalised_parse():
                 'source_description': feed_description,
                 'source': feed_url
             }
-            newsInfo.append(newEntry)
 
             if not check_rss_news_exists(newEntry["source"], newEntry["title"]):
                 link_button = InlineKeyboardMarkup().row(
@@ -67,9 +64,7 @@ async def generalised_parse():
 
                 add_rss_news(feed_url, newEntry["title"], newEntry["link"])
                 await asyncio.sleep(1500)
-    return newsInfo
 
 
-async def rss_start():
-    while True:
-        await generalised_parse()
+
+
