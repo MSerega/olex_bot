@@ -45,6 +45,13 @@ async def database():
             "phoneOwnerCar" TEXT DEFAULT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );""")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS "news_rss" (
+            "id" INTEGER NOT NULL UNIQUE,
+            "feed_url" TEXT,
+            "title" TEXT,
+            "link" TEXT,
+            PRIMARY KEY("id" AUTOINCREMENT)
+        );""")
         conn.commit()
         print("Успішне підключення до бази данних")
     except Exception as e:
@@ -146,3 +153,17 @@ def get_horoscope(horoscope):
     row = cursor.execute(*sql).fetchone()
     return row[0]
 
+
+def check_rss_news_exists(feed_url, news_title):
+    sql = "SELECT * FROM news_rss WHERE feed_url = ? AND title = ?"
+    row = cursor.execute(sql, (feed_url, news_title)).fetchone()
+    return row is not None
+
+
+def add_rss_news(feed_url, news_title, news_link):
+    try:
+        sql = "INSERT INTO news_rss (feed_url, title, link) VALUES (?, ?, ?)", (feed_url, news_title, news_link)
+        cursor.execute(*sql)
+        conn.commit()
+    except Exception as e:
+        print(f"Виникла помилка:\nERROR:{e}")
