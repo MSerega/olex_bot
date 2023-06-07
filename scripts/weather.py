@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+
+from keyboards.default import links
 from settings.config import SINOPTIK, GISMETIO
 
 
@@ -91,5 +93,5 @@ def get_weather():
         f"На вулиці: {in_street}\n\n\U0001F38F "
         f"Вітер: {winter_div[0]} {winter_unit[0]} {winter_unit[1]}\n\U0001F30F "
         f"Тиск:  {tusk_div[0]} {tusk_unit[0]} {tusk_unit[1]}\n\U0001F4A7 "
-        f"Вологість: {vologist[1].text} {vologist[2].text}\n\n\n"
-        f"🌤 Народний прогноз:\n{people_weather}")
+        f"Вологість: {vologist[1].text} {vologist[2].text}"
+        f"{links}")

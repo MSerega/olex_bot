@@ -15,7 +15,6 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 async def generalised_parse():
     feed_urls = [
-        {"url": "https://tsn.ua/rss/full.rss", "description": "Свіжі новини TCН"},
         {"url": "https://oleks-selrada.gov.ua/category/news/feed/",
          "description": "Новини Олександрівської територіальної громади"}
     ]

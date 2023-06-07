@@ -21,12 +21,12 @@ async def enter_message_from_new_left_users(message: types.Message):
                                               f"<a href='https://t.me/c/1247030550/8939'>правила "
                                               f"групи</a> та дотримуйтесь їх.", disable_notification=True,
                                               disable_web_page_preview=True)
-            asyncio.create_task(functions.delete_message(greeting, 10))
+            asyncio.create_task(functions.delete_message(greeting, 60))
 
         else:
             greeting2 = await bot.send_message(message.chat.id,
                                                f"{message.new_chat_members[0].first_name} вітаємо в групі.",
                                                disable_notification=True)
-            asyncio.create_task(functions.delete_message(greeting2, 10))
+            asyncio.create_task(functions.delete_message(greeting2, 60))
 
 
