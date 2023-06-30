@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+
 from settings.config import SINOPTIK, GISMETIO
 
 
@@ -85,11 +86,9 @@ def get_weather():
         f"{desc}\n\n\U0001F305 "
         f"Схід сонця о: {times[0]}\n\U0001F304 "
         f"Захід сонця о: {times[1]}\n\n"
-        f"На даний момент:\n\U0001F321 "
+        f"На вулиці: {in_street}\n\n\U0001F38F "
         f"Температура: {temperatura[0]}\n\U0001F321 "
         f"Відчувається як: {vidchuttya[1]}\n\n\U0001F301 "
-        f"На вулиці: {in_street}\n\n\U0001F38F "
         f"Вітер: {winter_div[0]} {winter_unit[0]} {winter_unit[1]}\n\U0001F30F "
         f"Тиск:  {tusk_div[0]} {tusk_unit[0]} {tusk_unit[1]}\n\U0001F4A7 "
-        f"Вологість: {vologist[1].text} {vologist[2].text}\n\n\n"
-        f"🌤 Народний прогноз:\n{people_weather}")
+        f"Вологість: {vologist[1].text} {vologist[2].text}")
