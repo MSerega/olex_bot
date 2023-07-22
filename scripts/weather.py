@@ -91,4 +91,4 @@ def get_weather():
         f"Відчувається як: {vidchuttya[1]}\n\n\U0001F301 "
         f"Вітер: {winter_div[0]} {winter_unit[0]} {winter_unit[1]}\n\U0001F30F "
         f"Тиск:  {tusk_div[0]} {tusk_unit[0]} {tusk_unit[1]}\n\U0001F4A7 "
-        f"Вологість: {vologist[1].text} {vologist[2].text}")
+        f"Вологість: {vologist[4].text} {vologist[6].text}")
