@@ -40,7 +40,7 @@ async def command_map(message: types.Message):
         await message.reply('Забагато запитів, спробуйте через 2 секунд.')
     else:
         await functions.userInDb(message)
-        await message.answer_photo(InputFile("/home/dan/public_files/map.png"),
+        await message.answer_photo(InputFile("/var/www/alerts_map.png"),
                                    caption=f"\U0001F6A8 Карта повітряних тривог - "
                                            f"{datetime.now().strftime('%H:%M')}" + kb.links,
                                    disable_notification=True)

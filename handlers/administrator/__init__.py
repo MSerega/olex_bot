@@ -6,4 +6,5 @@ from . import cmd_ban
 from . import cmd_statistics
 from . import cmd_reboot_bot
 from . import cmd_chatgpt
+from . import cmd_edit_bot_msg
 
