@@ -55,8 +55,10 @@ async def trains(message: types.Message, state: FSMContext):
 async def cmd_taxi(message: types.Message, state: FSMContext):
     await message.answer(
         f"Перелік водіїв таксі, яких можна замовити по Олександрівці:\n\n"
+        f"📱 +38(095)-808-75-33 - Люкс таксі\n\n"
+        f"📱 +38(067)-520-37-41 - Люкс таксі\n\n"
+        f"📱 +38(098)-801-54-80 - Нове таксі\n\n"
         f"📱 +38(096)-139-14-72 - Іван\n\n"
-        # f"📱 +38(098)-611-36-48 - Юра\n\n"
         f"📱 +38(098)-642-66-52 - Сергій\n\n"
         f"📱 +38(097)-179-92-46 - Віктор\n\n"
         f"📱 +38(097)-883-24-39 - Віталій\n\n"
@@ -66,10 +68,7 @@ async def cmd_taxi(message: types.Message, state: FSMContext):
         f"📱 +38(096)-990-97-20 - Сергій\n\n"
         f"📱 +38(096)-004-47-89 - Андрій\n\n"
         f"📱 +38(098)-780-93-57 - Віталій\n\n"
-        f"📱 +38(098)-637-98-05 - Ігор\n\n"
-        f"📱 +38(095)-808-75-33 - Люкс таксі\n\n"
-        f"📱 +38(067)-520-37-41 - Люкс таксі\n\n"
-        f"📱 +38(098)-801-54-80 - Нове таксі" + kb.links, reply_markup=kb.back_btn)
+        f"📱 +38(098)-637-98-05 - Ігор" + kb.links, reply_markup=kb.back_btn, disable_web_page_preview=True)
     await FSM_transport.taxi.set()
 
 
@@ -85,7 +84,7 @@ async def cmd_bus(message: types.Message, state: FSMContext):
         f"⏱ 07:30, ⏱ 08:50, ⏱ 10:00,\n"
         f"⏱ 12:20, ⏱ 12:30,\n\n"
         f"⏱ 13:20 - відправлення зі старого автовокзалу\n\n"
-        f"⏱ 14:20, ⏱ 15:20, ⏱ 16:00" + kb.links, reply_markup=kb.back_btn)
+        f"⏱ 14:20, ⏱ 15:20, ⏱ 16:00" + kb.links, reply_markup=kb.back_btn, disable_web_page_preview=True)
     await FSM_transport.bus.set()
 
 
@@ -127,5 +126,3 @@ async def suburban_trains(message: types.Message, state: FSMContext):
     await message.answer(f"Розклад руху пасажирських поїздів через станцію Фундукліївка:\n\n" + trains_p + kb.links,
                          reply_markup=kb.back_btn)
     await FSM_transport.passenger_trains.set()
-
-
