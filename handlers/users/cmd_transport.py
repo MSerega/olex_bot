@@ -87,7 +87,10 @@ async def cmd_bus(message: types.Message, state: FSMContext):
         f"⏱ 14:20, ⏱ 15:20, ⏱ 16:00\n\n"
         f"🚌 Перевізники:\n\n"
         f"👤 ФОП Пікуліна Наталія Миколаївна\n"
-        f"📱 +38(050)-457-17-77" + kb.links, reply_markup=kb.back_btn, disable_web_page_preview=True)
+        f"📱 +38(050)-457-17-77\n\n"
+        f"ПП Кіровоград Авто Тур\n"
+        f"👤 Кущенко Валерій Олександрович\n"
+        f"📱 +38(067)-931-38-61" + kb.links, reply_markup=kb.back_btn, disable_web_page_preview=True)
     await FSM_transport.bus.set()
 
 
