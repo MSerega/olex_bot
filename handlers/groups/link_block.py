@@ -12,7 +12,7 @@ async def block_links(message: types.Message):
         linkmessage = await message.reply(
             f"@{message.from_user.username} Посилання в групі може писати лише адміністрація групи.")
         await message.delete()
-        await delete_message(linkmessage, 10)
+        await delete_message(linkmessage, 15)
     else:
         linkmessage = await message.reply(
             text=f"<a href='tg://user?id={message.from_user.id}'>{message.from_user.first_name}</a> "
@@ -21,4 +21,4 @@ async def block_links(message: types.Message):
         )
 
         await message.delete()
-        await delete_message(linkmessage, 10)
+        await delete_message(linkmessage, 15)

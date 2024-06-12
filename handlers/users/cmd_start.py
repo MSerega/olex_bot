@@ -2,6 +2,8 @@ import asyncio
 from aiogram import types
 
 from handlers.users.cmd_advertising import advertising
+from handlers.users.cmd_transport import cmd_bus, cmd_taxi
+from scripts.train import get_passenger_trains, get_suburnan_trains
 from loader import dp
 from keyboards import default as kb
 from handlers.users.cmd_news import command_news
@@ -20,3 +22,11 @@ async def command_start(message: types.Message):
         await command_news(message)
     elif arguments == 'advertising':
         await advertising(message)
+    elif arguments == 'bus':
+        await cmd_bus(message, "*")
+    elif arguments == 'taxi':
+        await cmd_taxi(message, "*")
+    elif arguments == 'passenger_trains':
+        await get_passenger_trains()
+    elif arguments == 'suburnan_trains':
+        await get_suburnan_trains()

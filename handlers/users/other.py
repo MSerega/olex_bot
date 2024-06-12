@@ -29,13 +29,13 @@ async def all_text_messages(message: types.Message):
         await message.reply(f'Х{fmt.hspoiler("##л# ла ла ла ла")}!\n(самі розумієте, матюки це погано:( ',
                             disable_notification=True)
 
-    elif message.text.lower() == 'слава україні':
-        await message.reply(f'Героям слава!', disable_notification=True)
+    elif 'слава україні' in message.text.lower():
+        await message.reply(f'Героям Слава!', disable_notification=True)
 
     elif message.text.lower() == 'україна':
         await message.reply(f'Понад усе!', disable_notification=True)
 
-    elif message.text.lower() == 'слава нації':
+    elif 'слава нації' in message.text.lower():
         await message.reply(f'Смерть ворогам!', disable_notification=True)
 
     if message.chat.id == g_pidsluhano_id:

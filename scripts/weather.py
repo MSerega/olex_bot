@@ -66,7 +66,7 @@ def get_weather():
     winter_div[0] = winter_div[0].strip()
 
     # Парсимо тиск
-    tusk_div = soup_gismetio.find('div', class_='unit_pressure_mm_hg_atm')
+    tusk_div = soup_gismetio.find('div', class_='unit_pressure_mm_hg')
     tusk_unit = []
     for item in tusk_div.select('.item-measure > div'):
         tusk_unit += item
@@ -88,7 +88,7 @@ def get_weather():
         f"Захід сонця о: {times[1]}\n\n"
         f"На вулиці: {in_street}\n\n\U0001F38F "
         f"Температура: {temperatura[0]}\n\U0001F321 "
-        f"Відчувається як: {vidchuttya[1]}\n\n\U0001F301 "
+        f"Відчувається як: {vidchuttya[2]}\n\n\U0001F301 "
         f"Вітер: {winter_div[0]} {winter_unit[0]} {winter_unit[1]}\n\U0001F30F "
         f"Тиск:  {tusk_div[0]} {tusk_unit[0]} {tusk_unit[1]}\n\U0001F4A7 "
-        f"Вологість: {vologist[1].text} {vologist[2].text}")
+        f"Вологість: {vologist[4].text} {vologist[6].text}")
