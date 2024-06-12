@@ -55,9 +55,8 @@ async def command_weather(message: types.Message):
         await message.reply('Забагато запитів, спробуйте через 2 секунд.')
     else:
         await functions.userInDb(message)
-        await bot.send_photo(message.chat.id, InputFile("images/weather.jpg"),
-                             caption=scripts.weather.get_weather() + kb.links,
-                             disable_notification=True, reply_markup=types.ReplyKeyboardRemove())
+        await bot.send_message(message.chat.id, text=scripts.weather.get_weather() + kb.links,
+                               disable_web_page_preview=True, disable_notification=True, reply_markup=types.ReplyKeyboardRemove())
 
 
 @dp.message_handler(text="💵 Курс валют", state="*", chat_type=types.ChatType.PRIVATE)
@@ -71,7 +70,6 @@ async def command_exchange(message: types.Message):
         await functions.userInDb(message)
         await message.answer(scripts.exchange.get_exchange() + kb.links,
                              disable_notification=True, reply_markup=types.ReplyKeyboardRemove())
-
 
 # @dp.message_handler(commands=['fuel'], state="*")
 # async def command_fuel(message: types.Message):

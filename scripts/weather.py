@@ -1,13 +1,14 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
 
-from settings.config import SINOPTIK, GISMETIO
+from settings.config import SINOPTIK
 
 
 def get_weather():
     # сторінки з яких буде проводитись парсинг
     url_sinoptik = SINOPTIK
-    url_gismetio = GISMETIO
 
     # Заголовки необхідні для доступу до деяких сайтів
     headers = {
@@ -17,16 +18,42 @@ def get_weather():
 
     # Витягуємо html код сторінок
     response_sinoptik = requests.get(url_sinoptik, headers=headers)
-    response_gismetio = requests.get(url_gismetio, headers=headers)
-
-    response_gismetio.encoding = 'utf-8'
     soup_sinoptik = BeautifulSoup(response_sinoptik.content, 'lxml')
-    soup_gismetio = BeautifulSoup(response_gismetio.content, 'lxml')
 
-    # Парсимо сайти по їх класах
+    # Створення словників для відповідності англійських та українських назв днів тижня та місяців
+    uk_weekdays = {
+        'Monday': 'Понеділок',
+        'Tuesday': 'Вівторок',
+        'Wednesday': 'Середа',
+        'Thursday': 'Четвер',
+        'Friday': 'П\'ятниця',
+        'Saturday': 'Субота',
+        'Sunday': 'Неділя'
+    }
+
+    uk_months = {
+        'January': 'Січня',
+        'February': 'Лютого',
+        'March': 'Березня',
+        'April': 'Квітня',
+        'May': 'Травня',
+        'June': 'Червня',
+        'July': 'Липня',
+        'August': 'Серпня',
+        'September': 'Вересня',
+        'October': 'Жовтня',
+        'November': 'Листопада',
+        'December': 'Грудня'
+    }
+
+    current_date = datetime.now()
+    weekday_name = current_date.strftime("%A")
+    month_name = current_date.strftime("%B")
+    uk_weekday_name = uk_weekdays.get(weekday_name, weekday_name)
+    uk_month_name = uk_months.get(month_name, month_name)
+    today_date = f"{current_date.day} {uk_month_name} {current_date.year} року"
 
     # Парсимо опис погоди
-
     description = [item.text.strip() for item in soup_sinoptik.find_all('div', class_='description')]
     if len(description) == 4:
         desc = description[2]
@@ -38,57 +65,51 @@ def get_weather():
         desc = description[0]
         people_weather = description[1].replace('Народний прогноз погоди: ', '')
 
-    # Парсимо день та час погоди
-    day_name = soup_sinoptik.find('p', class_='day-link').text
-    time_weather = soup_gismetio.find('div', class_='now-localdate').text
-    time_day = time_weather.split(", ")
-
-    # Парсимо температуру в градусах цельсія
-    temperatura = soup_gismetio.find('div', class_='now-weather').text.split()
-
-    # Парсимо температуру на відчуття
-    vidchuttya = soup_gismetio.find('div', class_='now-feel').text.split()
-
-    # Парсимо погоду на вулиці
-    in_street = soup_gismetio.find('div', class_='now-desc').text.strip()
+    # Парсимо cхід та захід сонця
+    time_weather = soup_sinoptik.find('div', class_='infoDaylight').text
+    time_tokens = time_weather.split()
+    sunrise_time = time_tokens[1]
+    sunset_time = time_tokens[3]
 
     # Парсимо часу заходу і сходу сонця
-    times = []
+    times_day = []
     for item in soup_sinoptik.select('.infoDaylight > span'):
-        times += item
+        times_day += item
 
-    # Парсимо вітер
-    winter_div = soup_gismetio.find('div', class_='unit_wind_m_s')
-    winter_unit = []
-    for item in winter_div.select('.item-measure > div'):
-        winter_unit += item
-    winter_div = winter_div.text.split(winter_unit[0])
-    winter_div[0] = winter_div[0].strip()
+    weather_table = soup_sinoptik.select_one('.weatherDetails')
 
-    # Парсимо тиск
-    tusk_div = soup_gismetio.find('div', class_='unit_pressure_mm_hg')
-    tusk_unit = []
-    for item in tusk_div.select('.item-measure > div'):
-        tusk_unit += item
-    tusk_div = tusk_div.text.split(tusk_unit[0])
-    tusk_div[0] = tusk_div[0].strip()
+    if weather_table:
+        rows = weather_table.select('tbody tr')
 
-    # Парсимо вологість
-    vologist_div = soup_gismetio.find('div', class_='now-info-item humidity')
-    vologist = []
-    for item in vologist_div:
-        vologist += item
+        if rows:
+            # Парсинг часу, температури, відчуття як, тиску, вологості, вітру та ймовірності опадів
+            times = [td.get_text(strip=True) for td in rows[0].select('td')]
+            temperatures = [td.get_text(strip=True) for td in rows[2].select('td')]
+            feels_like = [td.get_text(strip=True) for td in rows[3].select('td')]
+            pressures = [td.get_text(strip=True) for td in rows[4].select('td')]
+            humidity = [td.get_text(strip=True) for td in rows[5].select('td')]
+            winds = [td.get_text(strip=True) for td in rows[6].select('td')]
+            precipitation_chances = [td.get_text(strip=True) for td in rows[7].select('td')]
 
-    soup_sinoptik.clear()
-    soup_gismetio.clear()
-    return (
-        f"\U0001F4C5 {day_name} {time_day[1]} \U0001F55D {time_day[2]}\n"
-        f"{desc}\n\n\U0001F305 "
-        f"Схід сонця о: {times[0]}\n\U0001F304 "
-        f"Захід сонця о: {times[1]}\n\n"
-        f"На вулиці: {in_street}\n\n\U0001F38F "
-        f"Температура: {temperatura[0]}\n\U0001F321 "
-        f"Відчувається як: {vidchuttya[2]}\n\n\U0001F301 "
-        f"Вітер: {winter_div[0]} {winter_unit[0]} {winter_unit[1]}\n\U0001F30F "
-        f"Тиск:  {tusk_div[0]} {tusk_unit[0]} {tusk_unit[1]}\n\U0001F4A7 "
-        f"Вологість: {vologist[4].text} {vologist[6].text}")
+            # Формування текстового результату
+            result = (f"📅 {uk_weekday_name} {today_date} \n"
+                      f"{desc}\n\n"
+                      "Детальна інформація про погоду\n"
+                      f"🌅 Cхід сонця: {sunrise_time}\n"
+                      f"🌄 Захід сонця: {sunset_time}\n\n"
+                      + "\n".join(['-' * 50 +
+                                   f"\n🕝 Час: {times[i]}\n"
+                                   f"🌡 Температура: {temperatures[i]}\n"
+                                   f"🌡 Відчувається як: {feels_like[i]}\n"
+                                   f"🌏 Тиск: {pressures[i]}\n"
+                                   f"💧 Вологість: {humidity[i]}\n"
+                                   f"🌁 Вітер: {winds[i]}\n"
+                                   f"🌨 Ймовірність опадів: {precipitation_chances[i]}"
+                                   for i in range(len(times))]))
+
+            print(result)
+            return result
+        else:
+            return "Не вдалося знайти рядки таблиці."
+    else:
+        return "Не вдалося знайти таблицю weatherDetails."
