@@ -84,12 +84,14 @@ def get_weather():
         if rows:
             # Парсинг часу, температури, відчуття як, тиску, вологості, вітру та ймовірності опадів
             times = [td.get_text(strip=True) for td in rows[0].select('td')]
+            weather_descriptions = [td.find('div')['title'] for td in rows[1].select('td')]
             temperatures = [td.get_text(strip=True) for td in rows[2].select('td')]
             feels_like = [td.get_text(strip=True) for td in rows[3].select('td')]
             pressures = [td.get_text(strip=True) for td in rows[4].select('td')]
             humidity = [td.get_text(strip=True) for td in rows[5].select('td')]
             winds = [td.get_text(strip=True) for td in rows[6].select('td')]
-            precipitation_chances = [td.get_text(strip=True) for td in rows[7].select('td')]
+            precipitation_chances = [td.get_text(strip=True) if td.get_text(strip=True) != '-' else '0' for td in rows[7].select('td')]
+
 
             # Формування текстового результату
             result = (f"📅 {uk_weekday_name} {today_date} \n"
@@ -99,12 +101,13 @@ def get_weather():
                       f"🌄 Захід сонця: {sunset_time}\n\n"
                       + "\n".join(['-' * 50 +
                                    f"\n🕝 Час: {times[i]}\n"
-                                   f"🌡 Температура: {temperatures[i]}\n"
+                                   f"🗾 На небі: {weather_descriptions[i]}\n"
+                                   f"🌡 Температура: {temperatures[i]} °C\n"
                                    f"🌡 Відчувається як: {feels_like[i]}\n"
-                                   f"🌏 Тиск: {pressures[i]}\n"
-                                   f"💧 Вологість: {humidity[i]}\n"
-                                   f"🌁 Вітер: {winds[i]}\n"
-                                   f"🌨 Ймовірність опадів: {precipitation_chances[i]}"
+                                   f"🌏 Тиск: {pressures[i]} мм.\n"
+                                   f"💧 Вологість: {humidity[i]}%\n"
+                                   f"🌁 Вітер: {winds[i]} м/сек\n"
+                                   f"🌨 Ймовірність опадів: {precipitation_chances[i]} %"
                                    for i in range(len(times))]))
 
             print(result)
