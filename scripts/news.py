@@ -1,4 +1,3 @@
-import requests
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from bs4 import BeautifulSoup
 import asyncio
@@ -9,7 +8,7 @@ from settings.config import OLEX_NEWS, c_pidsluhano_id
 from db.db_connect import check_news_exists, add_news
 
 
-def get_news():
+async def get_news():
     # сторінки з яких буде проводитись парсинг
     url_olex_news = OLEX_NEWS
 
@@ -36,5 +35,5 @@ def get_news():
         await bot.send_photo(145333452, image_src, caption=title + links, reply_markup=link_button)
     else:
         print(f"Новина '{title}' вже існує в базі даних")
-    await asyncio.sleep(1500)
 
+    await asyncio.sleep(1500)
