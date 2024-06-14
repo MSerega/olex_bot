@@ -110,7 +110,6 @@ def get_weather():
                                    f"🌨 Ймовірність опадів: {precipitation_chances[i]} %"
                                    for i in range(len(times))]))
 
-            print(result)
             return result
         else:
             return "Не вдалося знайти рядки таблиці."

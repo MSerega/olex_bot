@@ -1,3 +1,4 @@
+import requests
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from bs4 import BeautifulSoup
 import asyncio
@@ -24,7 +25,7 @@ async def get_news():
 
     link = soup_olex_news.find('h2', class_='entry-title').a['href']
     title = soup_olex_news.find('h2', class_='entry-title').text.strip()
-    #  description = soup_olex_news.find('div', class_='entry-summary').p.get_text(strip=True)
+    description = soup_olex_news.find('div', class_='entry-summary').p.get_text(strip=True)
     image_src = soup_olex_news.find('div', class_='entry-featuredImg').img['src']
 
     link_button = InlineKeyboardMarkup().row(
@@ -32,8 +33,8 @@ async def get_news():
 
     if not check_news_exists(link, title):
         add_news(url_olex_news, link, title, image_src)
-        await bot.send_photo(145333452, image_src, caption=title + links, reply_markup=link_button)
+        await bot.send_photo(145333452, image_src, caption=f"💬 Новини Олександрівської територіальної громади:\n\n<b>{title}</b>\n" + links, reply_markup=link_button)
     else:
         print(f"Новина '{title}' вже існує в базі даних")
 
-    await asyncio.sleep(1500)
+
