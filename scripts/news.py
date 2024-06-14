@@ -33,8 +33,7 @@ async def get_news():
 
     if not check_news_exists(link, title):
         add_news(url_olex_news, link, title, image_src)
-        await bot.send_photo(145333452, image_src, caption=f"💬 Новини Олександрівської територіальної громади:\n\n<b>{title}</b>\n" + links, reply_markup=link_button)
-    else:
-        print(f"Новина '{title}' вже існує в базі даних")
+        await bot.send_photo(c_pidsluhano_id, image_src, caption=f"💬 Новини Олександрівської територіальної громади:\n\n<b>{title}</b>\n" + links, reply_markup=link_button)
+
 
 
