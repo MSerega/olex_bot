@@ -25,8 +25,7 @@ async def set_admin_commands(dp, admin_id):
                 types.BotCommand("menu", "📋 Меню"),
                 types.BotCommand("statistics", "📊 Статистика"),
                 types.BotCommand("sender", "📨 Відправити повідомлення"),
-                types.BotCommand("reboot_olex_bot", "🔄 Reload olex_bot"),
-                types.BotCommand("reboot_alarm_bot", "🔄 Reload alarm_bot")
+                types.BotCommand("control_bot", "🔄 Bot Control"),
             ],
             scope=types.bot_command_scope.BotCommandScopeChat(admin_id)
         )
