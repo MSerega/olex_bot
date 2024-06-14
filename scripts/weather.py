@@ -32,18 +32,18 @@ def get_weather():
     }
 
     uk_months = {
-        'January': 'Січня',
-        'February': 'Лютого',
-        'March': 'Березня',
-        'April': 'Квітня',
-        'May': 'Травня',
-        'June': 'Червня',
-        'July': 'Липня',
-        'August': 'Серпня',
-        'September': 'Вересня',
-        'October': 'Жовтня',
-        'November': 'Листопада',
-        'December': 'Грудня'
+        'January': 'січня',
+        'February': 'лютого',
+        'March': 'березня',
+        'April': 'квітня',
+        'May': 'травня',
+        'June': 'червня',
+        'July': 'липня',
+        'August': 'серпня',
+        'September': 'вересня',
+        'October': 'жовтня',
+        'November': 'листопада',
+        'December': 'грудня'
     }
 
     current_date = datetime.now()
