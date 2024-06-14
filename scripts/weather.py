@@ -83,7 +83,7 @@ def get_weather():
 
         if rows:
             # Парсинг часу, температури, відчуття як, тиску, вологості, вітру та ймовірності опадів
-            times = [td.get_text(strip=True) for td in rows[0].select('td')]
+            times = [td.get_text(strip=True).replace(" ", "") for td in rows[0].select('td')]
             weather_descriptions = [td.find('div')['title'] for td in rows[1].select('td')]
             temperatures = [td.get_text(strip=True) for td in rows[2].select('td')]
             feels_like = [td.get_text(strip=True) for td in rows[3].select('td')]
