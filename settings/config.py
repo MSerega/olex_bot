@@ -26,7 +26,7 @@ g_pidsluhano_id = -1001247030550
 PRIVAT_ECHANGE = env.str("PRIVAT_ECHANGE")
 
 SINOPTIK = env.str("SINOPTIK")
-GISMETIO = env.str("GISMETIO")
+OLEX_NEWS = env.str("OLEX_NEWS")
 
 FUEL_ANP_SHELL = env.str("FUEL_ANP_SHELL")
 

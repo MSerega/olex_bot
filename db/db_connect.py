@@ -45,11 +45,12 @@ async def database():
             "phoneOwnerCar" TEXT DEFAULT NULL,
             PRIMARY KEY("id" AUTOINCREMENT)
         );""")
-        cursor.execute("""CREATE TABLE IF NOT EXISTS "news_rss" (
+        cursor.execute("""CREATE TABLE IF NOT EXISTS "news" (
             "id" INTEGER NOT NULL UNIQUE,
             "feed_url" TEXT,
+            "news_link" TEXT,
             "title" TEXT,
-            "link" TEXT,
+            "image_link" TEXT,
             PRIMARY KEY("id" AUTOINCREMENT)
         );""")
         conn.commit()
@@ -154,15 +155,15 @@ def get_horoscope(horoscope):
     return row[0]
 
 
-def check_rss_news_exists(feed_url, news_title):
-    sql = "SELECT * FROM news_rss WHERE feed_url = ? AND title = ?"
-    row = cursor.execute(sql, (feed_url, news_title)).fetchone()
+def check_news_exists(news_link, title):
+    sql = "SELECT * FROM news WHERE news_link = ? AND title = ?"
+    row = cursor.execute(sql, (news_link, title)).fetchone()
     return row is not None
 
 
-def add_rss_news(feed_url, news_title, news_link):
+def add_news(feed_url, news_link, title, image_link):
     try:
-        sql = "INSERT INTO news_rss (feed_url, title, link) VALUES (?, ?, ?)", (feed_url, news_title, news_link)
+        sql = "INSERT INTO news (feed_url, news_link, title, image_link) VALUES (?, ?, ?, ?)", (feed_url, news_link, title, image_link)
         cursor.execute(*sql)
         conn.commit()
     except Exception as e:

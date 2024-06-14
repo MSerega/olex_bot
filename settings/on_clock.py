@@ -2,7 +2,7 @@ import aioschedule
 import asyncio
 import handlers
 from scripts.horoscope import update_horoscope
-from scripts.news_rss import generalised_parse
+from scripts.news import get_news
 
 
 async def scheduler():
@@ -13,7 +13,7 @@ async def scheduler():
     aioschedule.every().day.at("9:00").do(handlers.channels.morning_pidsluhaho.morning_memory)
     # aioschedule.every().day.at("23:00").do(handlers.groups.change_permissions.message_permissions_block)
     for hour in range(7, 24):
-        aioschedule.every().day.at(f"{hour}:00").do(generalised_parse)
+        aioschedule.every().day.at(f"{hour}:00").do(get_news)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
