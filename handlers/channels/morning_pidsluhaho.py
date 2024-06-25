@@ -7,9 +7,9 @@ from keyboards.default import links
 
 
 async def morning_weather():
-    await bot.send_photo(c_pidsluhano_id, InputFile("images/weather.jpg"),
-                         caption=weather.get_weather() + links,
-                         disable_notification=True)
+    # await bot.send_photo(c_pidsluhano_id, InputFile("images/weather.jpg"), caption=weather.get_weather() + links,
+    # disable_notification=True)
+    await bot.send_message(c_pidsluhano_id, weather.get_weather() + links, disable_notification=True)
 
 
 async def morning_memory():
