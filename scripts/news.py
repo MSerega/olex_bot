@@ -1,5 +1,5 @@
 import requests
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputFile
 from bs4 import BeautifulSoup
 import asyncio
 
@@ -10,8 +10,8 @@ from db.db_connect import check_news_exists, add_news
 
 
 async def get_news():
-    # сторінки з яких буде проводитись парсинг
-    url_olex_news = OLEX_NEWS
+    # Сторінка з якої буде проводитись парсинг
+    url_olex_news = "OLEX_NEWS_URL"
 
     # Заголовки необхідні для доступу до деяких сайтів
     headers = {
@@ -23,17 +23,34 @@ async def get_news():
     response_olex_news = requests.get(url_olex_news, headers=headers)
     soup_olex_news = BeautifulSoup(response_olex_news.content, 'lxml')
 
-    link = soup_olex_news.find('h2', class_='entry-title').a['href']
-    title = soup_olex_news.find('h2', class_='entry-title').text.strip()
-    description = soup_olex_news.find('div', class_='entry-summary').p.get_text(strip=True)
-    image_src = soup_olex_news.find('div', class_='entry-featuredImg').img['src']
+    # Отримуємо всі статті на сторінці
+    articles = soup_olex_news.find_all('article')
 
-    link_button = InlineKeyboardMarkup().row(
-        InlineKeyboardButton("📢 Дізнатися більше", url=link))
+    for article in articles:
+        link = article.find('h2', class_='entry-title').a['href']
+        title = article.find('h2', class_='entry-title').text.strip()
+        description = article.find('div', class_='entry-summary').p.get_text(strip=True)
 
-    if not check_news_exists(link, title):
-        add_news(url_olex_news, link, title, image_src)
-        await bot.send_photo(c_pidsluhano_id, image_src, caption=f"💬 Новини Олександрівської територіальної громади:\n<b>{title}</b>" + links, reply_markup=link_button)
+        # Перевірка наявності зображення
+        img_tag = article.find('div', class_='entry-featuredImg')
+        if img_tag and img_tag.img:
+            image_src = img_tag.img['src']
+        else:
+            # Вставка власної картинки, якщо зображення відсутнє
+            image_src = 'images/notnews.jpg'
 
+        link_button = InlineKeyboardMarkup().row(
+            InlineKeyboardButton("📢 Дізнатися більше", url=link))
+
+        if not check_news_exists(link, title):
+            add_news(url_olex_news, link, title, image_src)
+            if image_src.startswith('http'):
+                await bot.send_photo(c_pidsluhano_id, image_src,
+                                     caption=f"💬 Новини Олександрівської територіальної громади:\n<b>{title}</b>" + links,
+                                     reply_markup=link_button)
+            else:
+                await bot.send_photo(c_pidsluhano_id, InputFile(image_src),
+                                     caption=f"💬 Новини Олександрівської територіальної громади:\n<b>{title}</b>" + links,
+                                     reply_markup=link_button)
 
 

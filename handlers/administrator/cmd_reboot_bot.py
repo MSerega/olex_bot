@@ -12,6 +12,7 @@ BOTS = {
     '1': 'Alarm_bot'
 }
 
+
 # Команда /control_bot
 @dp.message_handler(commands=['control_bot'], chat_type=types.ChatType.PRIVATE, chat_id=ADMIN, state="*")
 async def control_bot(message: types.Message):
@@ -24,7 +25,8 @@ async def control_bot(message: types.Message):
 
 
 # Обробник вибору бота
-@dp.callback_query_handler(lambda c: c.data and c.data.startswith('select_bot_'), chat_type=types.ChatType.PRIVATE, chat_id=ADMIN, state="*")
+@dp.callback_query_handler(lambda c: c.data and c.data.startswith('select_bot_'), chat_type=types.ChatType.PRIVATE,
+                           chat_id=ADMIN, state="*")
 async def process_bot_selection(callback_query: types.CallbackQuery):
     bot_id = callback_query.data.split('_')[-1]
     bot_name = BOTS[bot_id]
@@ -42,7 +44,8 @@ async def process_bot_selection(callback_query: types.CallbackQuery):
 
 
 # Обробник дій з ботом
-@dp.callback_query_handler(lambda c: c.data and (c.data.startswith('stop_bot_') or c.data.startswith('restart_bot_')), chat_type=types.ChatType.PRIVATE, chat_id=ADMIN, state="*")
+@dp.callback_query_handler(lambda c: c.data and (c.data.startswith('stop_bot_') or c.data.startswith('restart_bot_')),
+                           chat_type=types.ChatType.PRIVATE, chat_id=ADMIN, state="*")
 async def process_bot_action(callback_query: types.CallbackQuery):
     action, bot_id = callback_query.data.split('_')[0], callback_query.data.split('_')[-1]
     bot_name = BOTS[bot_id]
